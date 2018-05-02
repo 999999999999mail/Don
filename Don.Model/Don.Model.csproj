@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20180423103657_CreateTable_Admin.cs" />
+    <Compile Remove="Migrations\20180423103927_CreateTable_Admin.cs" />
+    <Compile Remove="Migrations\20180423104944_CreateTable_Admin_Role_AdminRole.cs" />
+    <Compile Remove="Migrations\20180423105209_CreateTable_Admin_Role_AdminRole.cs" />
+    <Compile Remove="Migrations\20180423105332_CreateTable_Admin_Role_AdminRole.cs" />
+    <Compile Remove="Migrations\20180423124428_CreateTable_Admin_Role_AdminRole_User_Group_Menu_RoleMenu.cs" />
+    <Compile Remove="Migrations\20180426022343_CreateTable_Admin_Role_AdminRole_User_Group_Menu_RoleMenu.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-preview2-final" />
+  </ItemGroup>
+
+</Project>
