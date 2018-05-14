@@ -28,7 +28,7 @@ namespace Don.Model.Entities
 
         public string RegIP { get; set; }
 
-        public string RegTime { get; set; }
+        public DateTime RegTime { get; set; }
         /// <summary>
         /// 推荐码
         /// </summary>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class PagedRequest : BaseRequest
+    public class PagedReq : RequestBase
     {
         /// <summary>
         /// 页码

@@ -12,12 +12,18 @@
     <Compile Remove="Migrations\20180423105332_CreateTable_Admin_Role_AdminRole.cs" />
     <Compile Remove="Migrations\20180423124428_CreateTable_Admin_Role_AdminRole_User_Group_Menu_RoleMenu.cs" />
     <Compile Remove="Migrations\20180426022343_CreateTable_Admin_Role_AdminRole_User_Group_Menu_RoleMenu.cs" />
+    <Compile Remove="Migrations\20180510085527_AddTables.cs" />
+    <Compile Remove="Migrations\20180511070348_AddTables.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.0-preview2-final" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Don.Infrastructure\Don.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

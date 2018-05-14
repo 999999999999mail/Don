@@ -1,35 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class RegistRequest : BaseRequest
+    public class LoginReq : RequestBase
     {
         /// <summary>
         /// 登录名
         /// </summary>
+        [Required(ErrorMessage = "登录名不能为空")]
         public string LoginName { get; set; }
         /// <summary>
         /// 密码
         /// </summary>
+        [Required(ErrorMessage = "密码不能为空")]
         public string Password { get; set; }
-        /// <summary>
-        /// 真实姓名
-        /// </summary>
-        public string RealName { get; set; }
-        /// <summary>
-        /// 电话号码
-        /// </summary>
-        public string Tel { get; set; }
-        /// <summary>
-        /// 电子邮件
-        /// </summary>
-        public string EMail { get; set; }
-        /// <summary>
-        /// 推荐码( 选填 )
-        /// </summary>
-        public string RefCode { get; set; }
         /// <summary>
         /// 客户端Id
         /// </summary>

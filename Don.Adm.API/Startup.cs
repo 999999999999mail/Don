@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Don.Common;
+﻿using Don.Common;
 using Don.Common.AuthPolicy;
 using Don.Common.Messages;
 using Don.Common.Middleware;
@@ -23,7 +22,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 
-namespace Don.Web.API
+namespace Don.Adm.API
 {
     public class Startup
     {
@@ -96,16 +95,6 @@ namespace Don.Web.API
             services.Configure<JwtOptions>(jwtConf);
             #endregion
 
-            #region Authorization
-            services.AddSingleton<IAuthorizationHandler, TokenSessionHandler>();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("TokenSession", policy => policy.Requirements.Add(new TokenSessionRequirement(int.Parse(jwtConf["Expiry"]))));
-            });
-            #endregion
-
-            services.AddAutoMapper();
-
             services.AddMvc();
 
             #region Swagger
@@ -118,7 +107,7 @@ namespace Don.Web.API
                 });
                 var xmlDocPath = PlatformServices.Default.Application.ApplicationBasePath;
                 options.IncludeXmlComments(Path.Combine(xmlDocPath, "Don.Common.xml"));
-                options.IncludeXmlComments(Path.Combine(xmlDocPath, "Don.Web.API.xml"));
+                options.IncludeXmlComments(Path.Combine(xmlDocPath, "Don.Adm.API.xml"));
             });
             #endregion
         }
@@ -141,15 +130,15 @@ namespace Don.Web.API
                     ResponseBase resp = new ResponseBase();
                     if (err == null)
                     {
-                        loggerFactory.CreateLogger<Startup>().LogError($"Unknown Exception: {context.Request.Path}|{context.Request.GetClientIP()}");
                         resp.Code = -500;
                         resp.Msg = "Unknown Exception";
+                        loggerFactory.CreateLogger<Startup>().LogError($"Unknown Exception: {context.Request.Path}|{context.Request.GetClientIP()}");
                     }
                     else
                     {
-                        loggerFactory.CreateLogger<Startup>().LogError($"Unhandled Exception: {err.Message}\r\n{err.StackTrace}");
                         resp.Code = -501;
                         resp.Msg = "Unhandled Exception";
+                        loggerFactory.CreateLogger<Startup>().LogError($"Unhandled Exception: {err.Message}\r\n{err.StackTrace}"); 
                     }
                     context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.ContentType = "application/json";
@@ -160,8 +149,6 @@ namespace Don.Web.API
             });
 
             app.UseAuthentication();
-
-            //app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc();
 

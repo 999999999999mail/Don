@@ -19,6 +19,12 @@ namespace Don.Model.Mappings
 
             builder.Property(e => e.Remark)
                 .HasMaxLength(100);
+
+            builder.Property(e => e.State)
+                .HasDefaultValue(0);
+
+            builder.Property(e => e.Sys)
+                .HasDefaultValue(false);
         }
     }
 }

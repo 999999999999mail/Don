@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class BaseRequest
+    public class RequestBase
     {
         /// <summary>
         /// 客户端 0: PC、1:Wap、2: AndroidApp、3: IPhoneApp（选填）

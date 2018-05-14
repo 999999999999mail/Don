@@ -4,15 +4,15 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class LoginResponse : BaseResponse
+    public class SecureReq : RequestBase
     {
         /// <summary>
-        /// AccessToken
+        /// 签名
         /// </summary>
-        public string AccessToken { get; set; }
+        public string Sign { get; set; }
         /// <summary>
-        /// TokenType
+        /// 请求时间戳
         /// </summary>
-        public string TokenType { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

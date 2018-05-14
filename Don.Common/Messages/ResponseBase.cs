@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class BaseResponse
+    public class ResponseBase
     {
         /// <summary>
         /// 状态码 0 表示请求成功，其他表示请求异常，原因请查看 Msg 说明

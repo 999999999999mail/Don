@@ -1,6 +1,8 @@
 ﻿using Don.Common.Messages;
+using Don.Infrastructure.Extensions;
 using Don.Infrastructure.Redis;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
@@ -16,12 +18,14 @@ namespace Don.Common.Middleware
     public class VisitMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<VisitMiddleware> _logger;
         private readonly IRedisClient _redisClient;
         private JwtOptions _jwtOptions;
 
-        public VisitMiddleware(RequestDelegate next, IRedisClient redisClient, IOptions<JwtOptions> options)
+        public VisitMiddleware(RequestDelegate next, ILogger<VisitMiddleware> logger, IRedisClient redisClient, IOptions<JwtOptions> options)
         {
             _next = next;
+            _logger = logger;
             _redisClient = redisClient;
             _jwtOptions = options.Value;
         }
@@ -30,6 +34,7 @@ namespace Don.Common.Middleware
         {
             string loginName = string.Empty;
             string loginId = string.Empty;
+
             #region Token 有效性检查
             if (context.User?.Identity?.IsAuthenticated ?? false)
             {
@@ -48,16 +53,18 @@ namespace Don.Common.Middleware
                 }
                 if (!auth)
                 {
-                    await context.Response.WriteAsync(JsonConvert.SerializeObject(new BaseResponse { Code = 401, Msg = "Token Invalid" },
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(new ResponseBase { Code = -401, Msg = "Token Invalid" },
                         Formatting.Indented,
                         new JsonSerializerSettings { ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver() }));
                     return;
                 }
             }
             #endregion
-            await _next(context);
-            #region 访问记录跟踪
 
+            await _next(context);
+
+            #region 访问记录跟踪
+            _logger.LogTrace($"Visit->LoginName：{loginName}|LoginId：{loginId}|URL：{context.Request.Path}|IP：{context.Request.GetClientIP()}");
             #endregion
         }
     }

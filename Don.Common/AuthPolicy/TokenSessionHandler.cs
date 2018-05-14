@@ -29,6 +29,7 @@ namespace Don.Common.AuthPolicy
                         await cache.KeyExpireAsync(loginName, TimeSpan.FromMinutes(requirement.Expiry));
                         context.Succeed(requirement);
                     }
+                    
                 }
             }
         }

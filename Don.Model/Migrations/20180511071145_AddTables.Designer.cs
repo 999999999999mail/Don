@@ -10,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Don.Model.Migrations
 {
     [DbContext(typeof(DonContext))]
-    partial class DonContextModelSnapshot : ModelSnapshot
+    [Migration("20180511071145_AddTables")]
+    partial class AddTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

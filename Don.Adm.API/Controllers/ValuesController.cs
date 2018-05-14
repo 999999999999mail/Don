@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Don.Admin.API.Controllers
+namespace Don.Adm.API.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller

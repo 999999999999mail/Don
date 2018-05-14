@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class DefaultResponse<T> : BaseResponse
+    public class DefaultResp<T> : ResponseBase
     {
         /// <summary>
         /// 返回数据
@@ -15,7 +15,7 @@ namespace Don.Common.Messages
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public DefaultResponse<T> Succ(T data)
+        public DefaultResp<T> Succ(T data)
         {
             Data = data;
             Code = 0;

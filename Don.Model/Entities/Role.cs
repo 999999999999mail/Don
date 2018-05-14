@@ -11,9 +11,13 @@ namespace Don.Model.Entities
         public string Name { get; set; }
 
         public string Remark { get; set; }
-
-        public bool Deleted { get; set; }
+        /// <summary>
+        /// 状态 0：正常，1：禁用
+        /// </summary>
+        public byte State { get; set; }
 
         public DateTime CreateTime { get; set; }
+
+        public bool Sys { get; set; }
     }
 }

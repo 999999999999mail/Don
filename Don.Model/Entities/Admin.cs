@@ -20,6 +20,9 @@ namespace Don.Model.Entities
 
         public DateTime CreateTime { get; set; }
 
+        /// <summary>
+        /// 状态 0：正常，1：禁用
+        /// </summary>
         public byte State { get; set; }
     }
 }

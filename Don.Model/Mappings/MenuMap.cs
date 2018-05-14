@@ -22,7 +22,7 @@ namespace Don.Model.Mappings
                 .IsRequired();
 
             builder.Property(e => e.Url)
-                .HasMaxLength(50);
+                .HasMaxLength(100);
 
             builder.Property(e => e.Css)
                 .HasMaxLength(50);

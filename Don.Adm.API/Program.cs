@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
 
-namespace Don.Web.API
+namespace Don.Adm.API
 {
     public class Program
     {
