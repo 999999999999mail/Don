@@ -2,7 +2,7 @@
 
 namespace Don.Common.Messages
 {
-    public class RegistReq : RequestBase
+    public class RegistReq : ClientRequest
     {
         /// <summary>
         /// 登录名
@@ -29,15 +29,11 @@ namespace Don.Common.Messages
         /// <summary>
         /// 电子邮件
         /// </summary>
-        public string EMail { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// 推荐码
         /// </summary>
         public string RefCode { get; set; }
-        /// <summary>
-        /// 客户端Id
-        /// </summary>
-        public string ClientId { get; set; }
         /// <summary>
         /// 验证码
         /// </summary>

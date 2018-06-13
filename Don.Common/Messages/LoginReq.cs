@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class LoginReq : RequestBase
+    public class LoginReq : ClientRequest
     {
         /// <summary>
         /// 登录名
@@ -17,10 +17,6 @@ namespace Don.Common.Messages
         /// </summary>
         [Required(ErrorMessage = "密码不能为空")]
         public string Password { get; set; }
-        /// <summary>
-        /// 客户端Id
-        /// </summary>
-        public string ClientId { get; set; }
         /// <summary>
         /// 验证码
         /// </summary>

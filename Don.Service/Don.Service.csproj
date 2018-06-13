@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Don.Common\Don.Common.csproj" />
+    <ProjectReference Include="..\Don.Model\Don.Model.csproj" />
   </ItemGroup>
 
 </Project>

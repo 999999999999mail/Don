@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class PagedReq : RequestBase
+    /// <summary>
+    /// 需要带分页信息的请求
+    /// </summary>
+    public class PagedRequest
     {
         /// <summary>
         /// 页码

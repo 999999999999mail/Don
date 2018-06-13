@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Don.Common.Messages
 {
-    public class SecureReq : RequestBase
+    /// <summary>
+    /// 需要带签名的请求
+    /// </summary>
+    public class SecureRequest
     {
         /// <summary>
         /// 签名
@@ -13,6 +16,6 @@ namespace Don.Common.Messages
         /// <summary>
         /// 请求时间戳
         /// </summary>
-        public DateTime Timestamp { get; set; }
+        public DateTime Time { get; set; }
     }
 }

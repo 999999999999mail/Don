@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Model.Entities
 {
-    public class RoleMenu
+    public class RolePermit
     {
         public int Id { get; set; }
 
@@ -15,5 +15,7 @@ namespace Don.Model.Entities
         public int MenuId { get; set; }
 
         public Menu Menu { get; set; }
+
+        public int Permit { get; set; }
     }
 }

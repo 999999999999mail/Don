@@ -2,31 +2,44 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Don.Common.Messages
+namespace Don.Service
 {
-    public class ResponseBase
+    /// <summary>
+    /// 业务结果基类
+    /// </summary>
+    public abstract class BizResultBase
     {
         /// <summary>
-        /// 状态码 0 表示请求成功，其他表示有错误，原因请查看 Msg 说明
+        /// 返回代码: 0（零）表示成功，非零表示执行过程错误。
         /// </summary>
-        public int Code { get; set; }
+        public int Code { get; set; } = -1;
+        /// <summary>
+        /// Code 不等于 0
+        /// </summary>
+        public bool NonzeroCode
+        {
+            get
+            {
+                return Code != 0;
+            }
+        }
         /// <summary>
         /// 消息说明
         /// </summary>
         public string Msg { get; set; }
+
         /// <summary>
-        /// 设置错误说明
+        /// 设置返回错误
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
         public dynamic Fail(string msg)
         {
-            Code = -1;
             Msg = msg;
             return this;
         }
         /// <summary>
-        /// 设置错误码及说明
+        /// 设置返回错误
         /// </summary>
         /// <param name="code"></param>
         /// <param name="msg"></param>

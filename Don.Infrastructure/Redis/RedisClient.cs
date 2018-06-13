@@ -7,10 +7,10 @@ namespace Don.Infrastructure.Redis
 {
     public class RedisClient : IRedisClient, IDisposable
     {
-        private readonly RedisOptions _options;
+        private readonly RedisClientOptions _options;
         private ConcurrentDictionary<string, ConnectionMultiplexer> _connections;
 
-        public RedisClient(IOptions<RedisOptions> options)
+        public RedisClient(IOptions<RedisClientOptions> options)
         {
             _options = options.Value;
             _connections = new ConcurrentDictionary<string, ConnectionMultiplexer>();

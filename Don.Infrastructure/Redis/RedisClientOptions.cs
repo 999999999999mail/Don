@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Don.Infrastructure.Redis
 {
-    public class RedisOptions
+    public class RedisClientOptions
     {
         public string ConnectionString { get; set; }
 

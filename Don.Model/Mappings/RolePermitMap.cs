@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Don.Model.Mappings
 {
-    public class RoleMenuMap : IEntityTypeConfiguration<RoleMenu>
+    public class RolePermitMap : IEntityTypeConfiguration<RolePermit>
     {
-        public void Configure(EntityTypeBuilder<RoleMenu> builder)
+        public void Configure(EntityTypeBuilder<RolePermit> builder)
         {
-            builder.ToTable("RoleMenu");
+            builder.ToTable("RolePermit");
         }
     }
 }

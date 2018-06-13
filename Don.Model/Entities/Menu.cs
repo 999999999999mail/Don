@@ -22,6 +22,6 @@ namespace Don.Model.Entities
 
         public string Css { get; set; }
 
-        public byte Type { get; set; }
+        public int Permit { get; set; }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Don.Model.Migrations
 {
-    public partial class AddTables : Migration
+    public partial class AddTables_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,7 +56,7 @@ namespace Don.Model.Migrations
                     Url = table.Column<string>(maxLength: 100, nullable: true),
                     Order = table.Column<int>(nullable: false),
                     Css = table.Column<string>(maxLength: 50, nullable: true),
-                    Type = table.Column<byte>(nullable: false)
+                    Permit = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,25 +167,26 @@ namespace Don.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleMenu",
+                name: "RolePermit",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<int>(nullable: false),
-                    MenuId = table.Column<int>(nullable: false)
+                    MenuId = table.Column<int>(nullable: false),
+                    Permit = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
+                    table.PrimaryKey("PK_RolePermit", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleMenu_Menu_MenuId",
+                        name: "FK_RolePermit_Menu_MenuId",
                         column: x => x.MenuId,
                         principalTable: "Menu",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RoleMenu_Role_RoleId",
+                        name: "FK_RolePermit_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "Id",
@@ -238,13 +238,13 @@ namespace Don.Model.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleMenu_MenuId",
-                table: "RoleMenu",
+                name: "IX_RolePermit_MenuId",
+                table: "RolePermit",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleMenu_RoleId",
-                table: "RoleMenu",
+                name: "IX_RolePermit_RoleId",
+                table: "RolePermit",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
@@ -267,7 +267,7 @@ namespace Don.Model.Migrations
                 name: "AdminRole");
 
             migrationBuilder.DropTable(
-                name: "RoleMenu");
+                name: "RolePermit");
 
             migrationBuilder.DropTable(
                 name: "UserLog");

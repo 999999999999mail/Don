@@ -4,8 +4,7 @@ using Don.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Don.Model.Migrations
 {
@@ -16,13 +15,15 @@ namespace Don.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-preview2-30571")
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Don.Model.Entities.Admin", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -55,7 +56,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.AdminLog", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AdminId");
 
@@ -85,7 +87,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.AdminRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AdminId");
 
@@ -103,7 +106,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.Group", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -130,7 +134,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.Menu", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -147,7 +152,7 @@ namespace Don.Model.Migrations
 
                     b.Property<int?>("ParentId");
 
-                    b.Property<byte>("Type");
+                    b.Property<int>("Permit");
 
                     b.Property<string>("Url")
                         .HasMaxLength(100);
@@ -162,7 +167,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -186,12 +192,15 @@ namespace Don.Model.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("Don.Model.Entities.RoleMenu", b =>
+            modelBuilder.Entity("Don.Model.Entities.RolePermit", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("MenuId");
+
+                    b.Property<int>("Permit");
 
                     b.Property<int>("RoleId");
 
@@ -201,13 +210,14 @@ namespace Don.Model.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleMenu");
+                    b.ToTable("RolePermit");
                 });
 
             modelBuilder.Entity("Don.Model.Entities.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("EMail")
                         .HasMaxLength(50);
@@ -256,7 +266,8 @@ namespace Don.Model.Migrations
             modelBuilder.Entity("Don.Model.Entities.UserLog", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreateTime");
 
@@ -311,7 +322,7 @@ namespace Don.Model.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Don.Model.Entities.RoleMenu", b =>
+            modelBuilder.Entity("Don.Model.Entities.RolePermit", b =>
                 {
                     b.HasOne("Don.Model.Entities.Menu", "Menu")
                         .WithMany()

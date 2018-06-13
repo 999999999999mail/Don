@@ -12,6 +12,7 @@ using Don.Common.Filters;
 using Microsoft.EntityFrameworkCore;
 using Don.Model.Entities;
 using Don.Common.DTO;
+using Don.Service.Interf;
 
 namespace Don.Web.API.Controllers
 {
@@ -23,15 +24,15 @@ namespace Don.Web.API.Controllers
     [Authorize, TokenSession]
     public class UserController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
         private readonly JwtOptions _jwtOptions;
 
         private readonly IRedisClient _redisClient;
 
-        public UserController(IUnitOfWork unitOfWork, IOptions<JwtOptions> jwtConf, IRedisClient redisClient)
+        public UserController(IUserService userService, IOptions<JwtOptions> jwtConf, IRedisClient redisClient)
         {
-            _unitOfWork = unitOfWork;
+            _userService = userService;
             _jwtOptions = jwtConf.Value;
             _redisClient = redisClient;
         }
@@ -45,37 +46,13 @@ namespace Don.Web.API.Controllers
         [ValidateModel]
         public async Task<LoginResp> Regist([FromBody] RegistReq req)
         {
-            var resp = new LoginResp();
-
-            var userRepo = _unitOfWork.GetRepository<User>();
-            var user = await userRepo.GetFirstOrDefaultAsync(p => new { p.Id }, p => p.LoginName == req.LoginName);
-            if (user != null)
+            var result = await _userService.Regist(req.LoginName, req.Password, req.Nickname, req.RealName, req.Tel, req.Email, req.RefCode, Request.GetClientIP(), req.ClientType, req.ClientId);
+            if (result.NonzeroCode)
             {
-                return resp.Fail(10002, "登录名已被使用");
+                return (new LoginResp()).Fail(result.Msg);
             }
 
-            var defaultGroup = await _unitOfWork.GetRepository<Group>().GetFirstOrDefaultAsync(predicate: p => p.Sys);
-            if (defaultGroup == null)
-            {
-                return resp.Fail(10001, "系统数据错误");
-            }
-
-            userRepo.Insert(new User
-            {
-                LoginName = req.LoginName,
-                Password = req.Password.ToMD5(),
-                Nickname = req.Nickname,
-                RealName = req.RealName,
-                Tel = req.Tel,
-                EMail = req.EMail,
-                RefCode = req.RefCode,
-                RegTime = DateTime.Now,
-                RegIP = Request.GetClientIP(),
-                GroupId = defaultGroup.Id
-            });
-            await _unitOfWork.SaveChangesAsync();
-
-            return await Login(req.LoginName, req.Password, req.AuthCode, req.ClientId, true);
+            return await Login(req.LoginName, req.Password, req.AuthCode, req.ClientType, req.ClientId, true);
         }
         /// <summary>
         /// 登录
@@ -87,36 +64,21 @@ namespace Don.Web.API.Controllers
         [ValidateModel]
         public async Task<LoginResp> Login([FromBody] LoginReq req)
         {
-            return await Login(req.LoginName, req.Password, req.AuthCode, req.ClientId);
+            return await Login(req.LoginName, req.Password, req.AuthCode, req.ClientType, req.ClientId);
         }
 
-        private async Task<LoginResp> Login(string loginName, string password, string authCode, string clientId, bool regist = false)
+        private async Task<LoginResp> Login(string loginName, string password, string authCode, byte clientType, string clientId, bool regist = false)
         {
             var resp = new LoginResp();
 
-            var pwdMD5 = password.ToMD5();
-            var user = await _unitOfWork.GetRepository<User>()
-                .GetFirstOrDefaultAsync(p => new UserLoginDto { UserId = p.Id }, predicate: p => p.LoginName == loginName && p.Password == pwdMD5);
-
-            if (user == null)
-            {
-                return resp.Fail(11002, "登录名或密码错误");
-            }
-
             var ip = Request.GetClientIP();
+            var website = Request.GetReferer();
 
-            // 写登录日志
-            await _unitOfWork.GetRepository<UserLog>()
-                .InsertAsync(new UserLog
-                {
-                    UserId = user.UserId,
-                    Desc = "用户登录系统",
-                    CreateTime = DateTime.Now,
-                    Keywords = "Login",
-                    IP = ip,
-                    Website = Request.GetReferer(),
-                });
-            await _unitOfWork.SaveChangesAsync();
+            var result = await _userService.Login(loginName, password, ip, website, clientType, clientId);
+            if (result.NonzeroCode)
+            {
+                return resp.Fail(result.Msg);
+            }
 
             // 生成本次登录的标识
             string loginId = $"__{ip}_{DateTime.Now.ToString("yyMMddHHmmssfffffff")}";
@@ -150,7 +112,7 @@ namespace Don.Web.API.Controllers
             var loginName = HttpContext?.User?.FindFirst(p => p.Type == Constants.LOGINNAME)?.Value;
             if (string.IsNullOrEmpty(loginName))
             {
-                return resp.Fail(12001, "未获取到登录信息");
+                return resp.Fail("未获取到登录信息");
             }
             await _redisClient.GetDatabase().KeyDeleteAsync(loginName);
             return resp;

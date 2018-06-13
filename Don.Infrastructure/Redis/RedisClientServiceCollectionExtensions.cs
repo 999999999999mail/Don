@@ -3,9 +3,9 @@ using System;
 
 namespace Don.Infrastructure.Redis
 {
-    public static class RedisServiceCollectionExtensions
+    public static class RedisClientServiceCollectionExtensions
     {
-        public static IServiceCollection AddRedis(this IServiceCollection services, Action<RedisOptions> setupAction)
+        public static IServiceCollection AddRedis(this IServiceCollection services, Action<RedisClientOptions> setupAction)
         {
             if (services == null)
             {

@@ -26,7 +26,7 @@ namespace Don.Model
 
         public DbSet<Menu> Menus { get; set; }
 
-        public DbSet<RoleMenu> RoleMenus { get; set; }
+        public DbSet<RolePermit> RolePermits { get; set; }
 
         public DbSet<UserLog> UserLogs { get; set; }
 
@@ -39,7 +39,7 @@ namespace Don.Model
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new GroupMap());
             modelBuilder.ApplyConfiguration(new MenuMap());
-            modelBuilder.ApplyConfiguration(new RoleMenuMap());
+            modelBuilder.ApplyConfiguration(new RolePermitMap());
             modelBuilder.ApplyConfiguration(new UserLogMap());
         }
     }
